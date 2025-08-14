@@ -1,86 +1,27 @@
-# Newsletter System Configuration
+# Streaming Industry Newsletter System
 
-# System Settings
-system:
-  max_articles_per_newsletter: 15
-  min_articles_per_newsletter: 3
-  content_retention_days: 365
-  processing_timeout_minutes: 10
+## Overview
+Automated newsletter that gathers streaming industry articles, uses AI to find the best ones, summarizes them, and emails them to me on a schedule.
 
-# RSS Sources
-rss_sources:
-  - url: "https://variety.com/feed/"
-    name: "Variety"
-    active: true
-    category: "entertainment"
-  - url: "https://deadline.com/feed/"
-    name: "Deadline"
-    active: true
-    category: "entertainment"
-  - url: "https://techcrunch.com/feed/"
-    name: "TechCrunch"
-    active: true
-    category: "technology"
+## Tech Stack
+- Supabase (database + Edge Functions)
+- OpenAI GPT (article evaluation + summarization) 
+- Gmail SMTP (email delivery)
+- RSS feeds + Google News (article sources)
 
-# NewsAPI Configuration
-news_api:
-  keywords:
-    - "Netflix streaming technology"
-    - "Disney+ technical updates"
-    - "Amazon Prime video tech"
-    - "generative AI content creation"
-    - "dubbing technology"
-    - "video streaming infrastructure"
-    - "post-production tools"
-    - "content creation AI"
-  sources: "techcrunch,variety,deadline,theverge"
-  language: "en"
-  sort_by: "relevancy"
+## Key Files
+- `tasks/prd-streaming-industry-newsletter.md` - Full requirements
+- `config/newsletter-config.yaml` - All settings and preferences
+- `.env` - API keys and SMTP config
 
-# Team Members Configuration
-users:
-  - email: "john@company.com"
-    name: "John Developer"
-    topics: ["Gen AI in Content", "Streaming Platforms", "Production Tools"]
-    frequency: "weekly"
-    delivery_day: "monday"
-    delivery_time: "09:00"
-    article_count: 8
-    
-  - email: "sarah@company.com"
-    name: "Sarah Manager"
-    topics: ["Streaming Platforms", "Dubbing Technology"]
-    frequency: "bi-weekly"
-    delivery_day: "friday"
-    delivery_time: "16:00"
-    article_count: 5
+## Focus Areas
+- Streaming companies: Netflix, Disney, Amazon Prime
+- Gen AI in content creation
+- Dubbing/localization tech
+- Production/post-production tools
 
-  - email: "mike@company.com"
-    name: "Mike CTO"
-    topics: ["Gen AI in Content", "Production Tools", "Post-Production Tech"]
-    frequency: "weekly"
-    delivery_day: "wednesday"
-    delivery_time: "08:00"
-    article_count: 10
-
-# Topic Categories
-topic_categories:
-  - "Gen AI in Content"
-  - "Dubbing Technology"
-  - "Streaming Platforms"
-  - "Production Tools"
-  - "Post-Production Tech"
-
-# Email Template Settings
-email_template:
-  from_name: "Streaming Tech Newsletter"
-  from_email: "newsletter@company.com"
-  subject_prefix: "[Streaming Tech]"
-  footer_text: "You're receiving this because you're part of the streaming technology team."
-  unsubscribe_text: "Click here to unsubscribe"
-
-# AI Processing Settings
-ai_settings:
-  relevance_threshold: 0.7
-  summary_max_words: 150
-  duplicate_similarity_threshold: 0.8
+## Implementation Notes
+- Personal use only (emails to myself)
+- No UI needed - just email delivery
+- Prevent duplicate articles forever
+- Use Supabase pg_cron for scheduling
