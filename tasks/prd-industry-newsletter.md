@@ -56,7 +56,7 @@ The Streaming Industry Newsletter System is an automated content curation and de
 18. The system must support configurable article count per user (range: 3-15 articles) in config file
 
 ### Email Delivery
-19. The system must integrate with Mailgun for reliable and cost-effective email delivery (100 emails/day free tier)
+19. The system must integrate with Gmail SMTP for reliable email delivery
 20. The system must generate well-formatted HTML email newsletters with article summaries, links, and source attribution
 21. The system must send newsletters according to each user's configured schedule from the config file
 22. The system must handle email delivery failures with retry logic
@@ -66,7 +66,7 @@ The Streaming Industry Newsletter System is an automated content curation and de
 24. The system must be deployed using Supabase Edge Functions for scalability and seamless database integration
 25. The system must implement scheduled jobs using Supabase's pg_cron extension for content gathering, processing, and delivery
 26. The system must log all operations for debugging and monitoring purposes using Supabase logging
-27. The system must handle API rate limits for external services (OpenAI, NewsAPI, Mailgun)
+27. The system must handle API rate limits for external services (OpenAI, NewsAPI, Gmail SMTP)
 28. The system must store processed articles, sent article history, and user data in Supabase PostgreSQL database
 
 ## Non-Goals (Out of Scope)
@@ -92,7 +92,7 @@ The Streaming Industry Newsletter System is an automated content curation and de
 ### API Integrations
 - **OpenAI GPT API:** For article evaluation and summarization (monitor token usage and costs)
 - **NewsAPI:** For gathering articles from news sources (respect rate limits)
-- **Mailgun or MailerSend API:** For email delivery (handle bounces and delivery failures)
+- **Gmail SMTP:** For email delivery (handle authentication and delivery failures)
 - **RSS Parsing:** Use reliable RSS parsing library with error handling for malformed feeds
 
 ### Data Models

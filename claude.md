@@ -10,7 +10,7 @@ Automated newsletter that gathers streaming industry articles, uses AI to find t
 - RSS feeds + Google News (article sources)
 
 ## Key Files
-- `tasks/prd-streaming-industry-newsletter.md` - Full requirements
+- `tasks/prd-industry-newsletter.md` - Full requirements
 - `config/newsletter-config.yaml` - All settings and preferences
 - `.env` - API keys and SMTP config
 
