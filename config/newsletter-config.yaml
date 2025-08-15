@@ -1,27 +1,244 @@
-# Streaming Industry Newsletter System
+# Newsletter System Configuration
 
-## Overview
-Automated newsletter that gathers streaming industry articles, uses AI to find the best ones, summarizes them, and emails them to me on a schedule.
+# System Settings
+system:
+  max_articles_per_newsletter: 7        # Maximum articles to include in each newsletter
+  min_articles_per_newsletter: 4        # Minimum articles required to send a newsletter
+  content_retention_days: 365           # How long to keep articles in database for duplicate detection (days)
+  processing_timeout_minutes: 10        # Maximum time allowed for AI processing before timeout
 
-## Tech Stack
-- Supabase (database + Edge Functions)
-- OpenAI GPT (article evaluation + summarization) 
-- Gmail SMTP (email delivery)
-- RSS feeds + Google News (article sources)
+# RSS Sources (including Google News searches)
+rss_sources:
+  # Core Entertainment Industry
+  - url: "https://variety.com/feed/"
+    name: "Variety"
+    active: true                         # Set to false to temporarily disable this source
+    category: "entertainment"            # Used for categorizing and filtering articles
+  - url: "https://deadline.com/feed/"
+    name: "Deadline"
+    active: true
+    category: "entertainment"
+  - url: "https://www.hollywoodreporter.com/feed/"
+    name: "Hollywood Reporter"
+    active: true
+    category: "entertainment"
 
-## Key Files
-- `tasks/prd-streaming-industry-newsletter.md` - Full requirements
-- `config/newsletter-config.yaml` - All settings and preferences
-- `.env` - API keys and SMTP config
+  # Technology Focus
+  - url: "https://techcrunch.com/feed/"
+    name: "TechCrunch"
+    active: true
+    category: "technology"
+  - url: "https://theverge.com/rss/index.xml"
+    name: "The Verge"
+    active: true
+    category: "technology"
+  - url: "https://www.wired.com/feed/"
+    name: "Wired"
+    active: true
+    category: "technology"
 
-## Focus Areas
-- Streaming companies: Netflix, Disney, Amazon Prime
-- Gen AI in content creation
-- Dubbing/localization tech
-- Production/post-production tools
+  # General News with Tech Coverage
+  - url: "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+    name: "New York Times - Technology"
+    active: true
+    category: "news"
 
-## Implementation Notes
-- Personal use only (emails to myself)
-- No UI needed - just email delivery
-- Prevent duplicate articles forever
-- Use Supabase pg_cron for scheduling
+  # Production Technology Specialists
+  - url: "https://www.postmagazine.com/rss.xml"
+    name: "Post Magazine"
+    active: true
+    category: "post-production"
+  - url: "https://www.provideocoalition.com/feed/"
+    name: "Pro Video Coalition"
+    active: true
+    category: "production"
+  - url: "https://www.newsshooter.com/feed/"
+    name: "Newsshooter"
+    active: true
+    category: "production"
+
+  # Gaming Industry
+  - url: "https://www.gamesindustry.biz/feed"
+    name: "GamesIndustry.biz"
+    active: true
+    category: "gaming"
+  - url: "https://www.gamedeveloper.com/rss.xml"
+    name: "Game Developer"
+    active: true
+    category: "gaming"
+
+  # Netflix Specific
+  - url: "https://news.google.com/rss/search?q=Netflix+technology+production&hl=en"
+    name: "Google News - Netflix Tech"
+    active: true
+    category: "netflix"
+  - url: "https://news.google.com/rss/search?q=Netflix+games+mobile&hl=en"
+    name: "Google News - Netflix Gaming"
+    active: true
+    category: "netflix"
+  - url: "https://news.google.com/rss/search?q=Netflix&hl=en"
+    name: "Google News - All Netflix News"
+    active: true
+    category: "netflix"
+
+  # Streaming Competitors
+  - url: "https://news.google.com/rss/search?q=Disney+streaming+technology&hl=en"
+    name: "Google News - Disney Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Amazon+Prime+Video+technology&hl=en"
+    name: "Google News - Amazon Prime Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=HBO+Max+streaming+technology&hl=en"
+    name: "Google News - HBO Max Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Apple+TV+streaming+technology&hl=en"
+    name: "Google News - Apple TV Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Paramount+streaming+technology&hl=en"
+    name: "Google News - Paramount Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Peacock+streaming&hl=en"
+    name: "Google News - Peacock"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Hulu+streaming+technology&hl=en"
+    name: "Google News - Hulu Tech"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=YouTube+TV+streaming&hl=en"
+    name: "Google News - YouTube TV"
+    active: true
+    category: "competitors"
+  - url: "https://news.google.com/rss/search?q=Tubi+streaming&hl=en"
+    name: "Google News - Tubi"
+    active: true
+    category: "competitors"
+
+  # Mobile Gaming Competitors
+  - url: "https://news.google.com/rss/search?q=Apple+Arcade+games&hl=en"
+    name: "Google News - Apple Arcade"
+    active: true
+    category: "gaming-competitors"
+  - url: "https://news.google.com/rss/search?q=Google+Play+Games&hl=en"
+    name: "Google News - Google Play Games"
+    active: true
+    category: "gaming-competitors"
+  - url: "https://news.google.com/rss/search?q=Xbox+Game+Pass+mobile&hl=en"
+    name: "Google News - Xbox Game Pass"
+    active: true
+    category: "gaming-competitors"
+  - url: "https://news.google.com/rss/search?q=Epic+Games&hl=en"
+    name: "Google News - Epic Games"
+    active: true
+    category: "gaming-competitors"
+  - url: "https://news.google.com/rss/search?q=Unity+gaming+platform&hl=en"
+    name: "Google News - Unity"
+    active: true
+    category: "gaming-competitors"
+  - url: "https://news.google.com/rss/search?q=mobile+gaming+industry&hl=en"
+    name: "Google News - Mobile Gaming Industry"
+    active: true
+    category: "gaming-competitors"
+
+  # Production & Post-Production Technology
+  - url: "https://news.google.com/rss/search?q=cinema+cameras+production+technology&hl=en"
+    name: "Google News - Production Tech"
+    active: true
+    category: "production-tech"
+  - url: "https://news.google.com/rss/search?q=video+editing+software+updates&hl=en"
+    name: "Google News - Post Production Software"
+    active: true
+    category: "post-production-tech"
+  - url: "https://news.google.com/rss/search?q=cloud+rendering+video+production&hl=en"
+    name: "Google News - Cloud Production"
+    active: true
+    category: "production-tech"
+
+  # Emerging Technologies in Entertainment
+  - url: "https://news.google.com/rss/search?q=AI+content+creation+film&hl=en"
+    name: "Google News - AI Content Creation"
+    active: true
+    category: "emerging-tech"
+  - url: "https://news.google.com/rss/search?q=automatic+dubbing+technology&hl=en"
+    name: "Google News - Auto Dubbing"
+    active: true
+    category: "emerging-tech"
+  - url: "https://news.google.com/rss/search?q=deepfake+detection+entertainment&hl=en"
+    name: "Google News - Deepfake Tech"
+    active: true
+    category: "emerging-tech"
+  - url: "https://news.google.com/rss/search?q=virtual+production+LED+walls&hl=en"
+    name: "Google News - Virtual Production"
+    active: true
+    category: "emerging-tech"
+  - url: "https://news.google.com/rss/search?q=machine+learning+video+compression&hl=en"
+    name: "Google News - ML Video Tech"
+    active: true
+    category: "emerging-tech"
+
+  # Industry Analysis
+  - url: "https://news.google.com/rss/search?q=streaming+wars+market+share&hl=en"
+    name: "Google News - Streaming Market"
+    active: true
+    category: "industry-analysis"
+  - url: "https://news.google.com/rss/search?q=cord+cutting+streaming+trends&hl=en"
+    name: "Google News - Streaming Trends"
+    active: true
+    category: "industry-analysis"
+  - url: "https://news.google.com/rss/search?q=streaming+services&hl=en"
+    name: "Google News - All Streaming Services"
+    active: true
+    category: "industry-analysis"
+
+  # International Competitors & Global Trends
+  - url: "https://news.google.com/rss/search?q=international+streaming+services&hl=en"
+    name: "Google News - International Streaming"
+    active: true
+    category: "global-competitors"
+  - url: "https://news.google.com/rss/search?q=European+streaming+platforms&hl=en"
+    name: "Google News - European Streaming"
+    active: true
+    category: "global-competitors"
+  - url: "https://news.google.com/rss/search?q=Asian+streaming+services&hl=en"
+    name: "Google News - Asian Streaming"
+    active: true
+    category: "global-competitors"
+
+# User Configuration (personal use)
+users:
+  - email: "pjtatano@gmail.com"
+    name: "Pj"
+    topics: ["Netflix", "Production Technology", "Post-Production Technology", "Emerging Tech", "Streaming Competitors"]  # Which topic categories to include
+    frequency: "weekly"                   # How often to send: daily/weekly/bi-weekly/monthly
+    delivery_day: "friday"               # Day of week to send newsletter
+    delivery_time: "12:00"               # Time to send newsletter (24-hour format)
+    article_count: 6                     # Target number of articles per newsletter (between min/max system limits)
+
+# Topic Categories
+topic_categories:                        # Available categories for filtering articles and user preferences
+  - "Netflix"
+  - "Streaming Competitors"
+  - "Gaming Competitors"
+  - "Global Competitors"
+  - "Production Technology"
+  - "Post-Production Technology"
+  - "Emerging Tech"
+  - "Industry Analysis"
+  - "Gaming Industry"
+
+# Email Template Settings
+email_template:
+  from_name: "Streaming Tech Newsletter"    # Display name shown as email sender
+  subject_prefix: "Personalized Industry Newsletter"  # Subject line for all newsletters
+  footer_text: ""                          # Footer text (empty = no footer)
+
+# AI Processing Settings
+ai_settings:
+  relevance_threshold: 0.7               # Minimum relevance score (0.0-1.0) for articles to be included
+  summary_max_words: 150                 # Maximum length of AI-generated article summaries (words)
+  duplicate_similarity_threshold: 0.8    # Similarity threshold (0.0-1.0) for detecting duplicate articles
